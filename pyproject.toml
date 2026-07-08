@@ -1,0 +1,11 @@
+[project]
+name = "desafio-rpa-cinco"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "dotenv>=0.9.9",
+    "playwright>=1.61.0",
+    "pymongo>=4.17.0",
+]

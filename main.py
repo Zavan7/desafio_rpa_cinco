@@ -4,8 +4,11 @@ from playwright.sync_api import sync_playwright
 
 from config.log import setup_logging
 from pages.initial_page import InitialPage
+from pages.patrice_page import PatricePage
 
 url = 'https://practicetestautomation.com/'
+patrice_page_selector = '#menu-item-20'
+
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +22,9 @@ def main() -> None:
 
             initial_page = InitialPage(page, url)
             initial_page.open()
+
+            patrice_page = PatricePage(page, patrice_page_selector)
+            patrice_page.click_patrice()
 
             sleep(5)
             browser.close()

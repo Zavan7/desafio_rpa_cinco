@@ -48,3 +48,30 @@ class TestExceptionChallenge(BasePage):
         except Exception as e:
             logger.error(f'3° - Test Exceptions\nError: {e}')
             return False
+
+
+
+    def input_challenge(self, text: str, input_selector: str) -> None: 
+
+        try:
+            logger.info('5º - Iniciando o input de informações no campo selecionado')
+
+            if self.page.locator(input_selector).is_editable:
+                self.page.locator(input_selector).fill(text)
+
+        except Exception as e:
+            logger.error('Error: ', e)
+
+
+    def save_challenge(self, button_save_selector: str) -> None:
+
+        try:
+            logger.info('6º - Salvando alterações feitas')
+
+            button_save = self.page.locator(button_save_selector)
+
+            if button_save.is_visible():   
+                button_save.click()
+
+        except Exception as e:
+            logger.error('Error: ', e)

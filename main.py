@@ -22,11 +22,13 @@ from time import sleep
 
 
 url = 'https://practicetestautomation.com/'
-patrice_page_selector = '#menu-item-20'
-test_exception_selection = "//a[text()='Test Exceptions']"
+page_patrice_selector = '#menu-item-20'
+page_exception_selector = "//a[text()='Test Exceptions']"
 button_add_selector  = '#add_btn'
 input_selector  = '#row2 .input-field'
+save_button_selector = '#save_btn .bnt'
 
+text = 'testando'
 
 
 
@@ -50,13 +52,13 @@ def main() -> None:
 
 
             # 2º etapa
-            patrice_page = PatricePage(page, patrice_page_selector)
+            patrice_page = PatricePage(page, page_patrice_selector)
             patrice_page.click_patrice()
 
 
             # 3º etapa
             test_exception_page = TestExceptionPage(
-                page, test_exception_selection
+                page, page_exception_selector
             )
             test_exception_page.click_test_exception()
 
@@ -70,7 +72,13 @@ def main() -> None:
 
             test_challenge.test_exceptions_challenge()
 
-            # sleep(5)
+            # 5º Digitando no input do site
+            test_challenge.input_challenge(text, input_selector)
+
+            # 6º Salvando informação adicionada
+            test_challenge.save_challenge(save_button_selector)
+
+            sleep(5)
             browser.close()
 
     except Exception as e:

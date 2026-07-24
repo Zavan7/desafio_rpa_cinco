@@ -26,7 +26,7 @@ page_patrice_selector = '#menu-item-20'
 page_exception_selector = "//a[text()='Test Exceptions']"
 button_add_selector  = '#add_btn'
 input_selector  = '#row2 .input-field'
-save_button_selector = '#save_btn .bnt'
+button_save_selector = '#save_btn .bnt'
 
 text = 'testando'
 
@@ -76,7 +76,7 @@ def main() -> None:
             test_challenge.input_challenge(text, input_selector)
 
             # 6º Salvando informação adicionada
-            test_challenge.save_challenge(save_button_selector)
+            test_challenge.save_challenge(button_save_selector)
 
             sleep(5)
             browser.close()

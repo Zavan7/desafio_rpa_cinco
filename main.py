@@ -28,7 +28,7 @@ page_exception_selector = "//a[text()='Test Exceptions']"
 button_add_selector  = '#add_btn'
 input_selector  = '#row2 .input-field'
 button_save_selector = '#save_btn .bnt'
-validation_selector = '#confirmation'
+tag_savad_locator = '#confirmation'
 
 text = 'testando'
 
@@ -81,7 +81,7 @@ def main() -> None:
             test_challenge.save_challenge(button_save_selector)
 
             # 7º - Validação final
-            validacao = ValidationFinal(page, validation_selector)
+            validacao = ValidationFinal(page, tag_savad_locator)
             validacao.validation_final()
 
             sleep(5)

@@ -64,12 +64,13 @@ input_selector = "#row2 .input-field"
 **Depois**
 
 ```python
-url = "https://practicetestautomation.com/"
-page_practice_selector = "#menu-item-20"
+url = 'https://practicetestautomation.com/'
+page_patrice_selector = '#menu-item-20'
 page_exception_selector = "//a[text()='Test Exceptions']"
-button_add_selector = "#add_btn"
-button_save_selector = "#save_btn .btn"
-input_selector = "#row2 .input-field"
+button_add_selector  = '#add_btn'
+input_selector  = '#row2 .input-field'
+button_save_selector = '#save_btn .bnt'
+tag_savad_locator = '#confirmation'
 ```
 
 Com essa convenção, basta ler o nome de um seletor para entender qual elemento ele representa, reduzindo ambiguidades e facilitando futuras alterações.

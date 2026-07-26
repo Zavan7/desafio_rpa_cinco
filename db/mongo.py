@@ -8,18 +8,19 @@ load_dotenv()
 class MongoDB:
 
     def __init__(self):
+        self.enabled = False
+
         use_mongo = os.getenv("USE_MONGO", "false").lower() == "true"
 
         if not use_mongo:
-            self.enabled = False
             return
 
         env = os.getenv("ENVIRONMENT", "local")
 
-        if env == "docker":
-            uri = os.getenv("MONGO_URI_DOCKER")
-        else:
-            uri = os.getenv("MONGO_URI_LOCAL")
+        uri = {
+            "docker": os.getenv("MONGO_URI_DOCKER"),
+            "local": os.getenv("MONGO_URI_LOCAL")
+        }.get(env)
 
         db_name = os.getenv("MONGO_DB", "default_db")
 

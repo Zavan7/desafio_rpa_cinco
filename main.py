@@ -27,7 +27,7 @@ input_selector  = '#row2 .input-field'
 button_save_selector = '#save_btn .bnt'
 tag_savad_locator = '#confirmation'
 
-text = 'testando'
+text = 'Pastel de Frango'
 
 
 

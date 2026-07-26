@@ -13,5 +13,20 @@ class ValidationFinal(BasePage):
         self.selector_validation = selector_validation
 
 
-    def Validation_final(self) -> None:
-        ...
+    def validation_final(self) -> bool:
+        
+        try:
+            logger.info('7º - Validação final')
+            
+            locator = self.page.locator(self.selector_validation)
+            
+            if not locator.is_visible():
+                logger.warning('Elemento não encontrado')
+                return False
+            
+            logger.info('Exito em salvar')
+            return True
+
+        except Exception as e:
+            logger.error('Error: ', e)
+            return False

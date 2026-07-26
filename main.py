@@ -5,6 +5,7 @@ from pages.initial_page import InitialPage
 from pages.patrice_page import PatricePage
 from pages.test_exceptions_page import TestExceptionPage
 from pages.exception_challenge import TestExceptionChallenge
+from validation.validation import ValidationFinal
 
 # Importação das libs chaves do projeto
 from playwright.sync_api import sync_playwright
@@ -27,6 +28,7 @@ page_exception_selector = "//a[text()='Test Exceptions']"
 button_add_selector  = '#add_btn'
 input_selector  = '#row2 .input-field'
 button_save_selector = '#save_btn .bnt'
+validation_selector = '#confirmation'
 
 text = 'testando'
 
@@ -77,6 +79,10 @@ def main() -> None:
 
             # 6º Salvando informação adicionada
             test_challenge.save_challenge(button_save_selector)
+
+            # 7º - Validação final
+            validacao = ValidationFinal(page, validation_selector)
+            validacao.validation_final()
 
             sleep(5)
             browser.close()

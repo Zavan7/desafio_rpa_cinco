@@ -18,9 +18,6 @@ import logging
 from config.log import setup_logging
 from db.mongo import MongoDB
 
-# Libs para debug (Não vai pra produção)
-from time import sleep
-
 
 url = 'https://practicetestautomation.com/'
 page_patrice_selector = '#menu-item-20'
@@ -36,8 +33,20 @@ text = 'testando'
 
 logger = logging.getLogger(__name__)
 
+mongo = MongoDB()
 
 def main() -> None:
+
+    result = {
+        'start_date': None,
+        'end_date': None,
+        'duration': None,
+        'status': None,
+        'error': None,
+    }
+
+    start_date = datetime.now(UTC)
+
     setup_logging()
     try:
         '''
@@ -84,12 +93,35 @@ def main() -> None:
             validacao = ValidationFinal(page, tag_savad_locator)
             validacao.validation_final()
 
-            sleep(5)
             browser.close()
 
+            status = 'Success'
+
+            end_date = datetime.now(UTC)
+
     except Exception as e:
+        error = f'Error: {e}'
+        status = 'fail'
+
         print(e)
+
+    finally:        
+        duration = (end_date - start_date).total_seconds()
+
+        result.update({
+            'start_date': start_date,
+            'end_date': end_date,
+            'duration': duration,
+            'status': status
+        })
+
+        try:
+            mongo.insert(result)
+            logger.info('Salvo no banco de dados')
         
+        except Exception as e:
+            logger.error('Error: ', e)
+            result['error'] = str(e)
 
 if __name__ == '__main__':
     main()

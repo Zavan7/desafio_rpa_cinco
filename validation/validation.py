@@ -50,12 +50,12 @@ class ValidationFinal(BasePage):
             locator = self.page.locator(self.selector_validation)
 
             if not locator.is_visible():
-                logger.warning('Elemento não encontrado')
+                logger.warning('Elemento de validação não encontrado')
                 return False
 
-            logger.info('Exito em salvar')
+            logger.info('Sua informação foi salva e validada')
             return True
 
         except Exception as e:
-            logger.error('Error: ', e)
+            logger.error(f'Erro, informação validadora não localizada {e}')
             return False

@@ -64,8 +64,8 @@ class InitialPage(BasePage):
 
         try:
             self.page.goto(self.url, timeout=self.timeout)
-            logger.info('Sucesso ao abrir a página')
+            logger.info('Sucesso ao abrir a página inicial')
 
         except Exception as e:
-            logger.error(f'1º Initial Page {e}')
+            logger.error(f'Erro ao iniciar a página: {e}')
             raise

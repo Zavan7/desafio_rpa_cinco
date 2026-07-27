@@ -69,11 +69,11 @@ class TestExceptionChallenge(BasePage):
                 state='visible',
                 timeout=20_000
             )
-            logger.info('Apareceu o trem lá')
+            logger.info('Área de input disponível')
             return True
 
         except Exception as e:
-            logger.error(f'3° - Test Exceptions\nError: {e}')
+            logger.error(f'Erro, área de input indisponível: {e}')
             return False
 
 
@@ -87,13 +87,19 @@ class TestExceptionChallenge(BasePage):
         '''
 
         try:
-            logger.info('5º - Iniciando o input de informações no campo selecionado')
+            logger.info(
+                '5º - Iniciando o input de informações no campo selecionado'
+            )
 
             if self.page.locator(input_selector).is_editable:
                 self.page.locator(input_selector).fill(text)
 
+            logger.info('Sucesso ao adicionar informações do campo de input')
+
         except Exception as e:
-            logger.error('Error: ', e)
+            logger.error(
+                f'Erro ao adicionar informações no campo de input: {e}'
+            )
 
 
     def save_challenge(self, button_save_selector: str) -> None:
@@ -112,6 +118,7 @@ class TestExceptionChallenge(BasePage):
 
             if button_save.is_visible():
                 button_save.click()
+            logger.info('Sucesso ao salvar página, aguardar validação')
 
         except Exception as e:
-            logger.error('Error: ', e)
+            logger.error(f'Erro ao tentar salvar, conferir validação: {e}')

@@ -61,5 +61,5 @@ class TestExceptionPage(BasePage):
             logger.info('Página TestExceptionPage acessada com sucesso')
 
         except Exception as e:
-            logger.error(f'Error: {e}')
+            logger.error(f'Erro ao acessar a página Test Exception: {e}')
             raise

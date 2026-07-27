@@ -120,7 +120,7 @@ def main() -> None:
             logger.info('Salvo no banco de dados')
         
         except Exception as e:
-            logger.error('Error: ', e)
+            logger.error(f'Erro ao salvar informações em banco de dados: {e}')
             result['error'] = str(e)
 
 if __name__ == '__main__':

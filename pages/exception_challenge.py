@@ -91,8 +91,22 @@ class TestExceptionChallenge(BasePage):
                 '5º - Iniciando o input de informações no campo selecionado'
             )
 
-            if self.page.locator(input_selector).is_editable:
-                self.page.locator(input_selector).fill(text)
+            input_field = self.page.locator(input_selector)
+
+            if not input_field.is_editable():
+                raise RuntimeError(
+                    'Campo de entrada não está disponível'
+                )
+            
+            input_field.fill(text)
+
+            value = input_field.input_value()
+
+            if value != text:
+                raise RuntimeError(
+                    f'Falha ao preencher o campo. Valor esperado: "{text}", '
+                    f'valor encontrado: "{value}".'
+                )
 
             logger.info('Sucesso ao adicionar informações do campo de input')
 
@@ -102,7 +116,12 @@ class TestExceptionChallenge(BasePage):
             )
 
 
-    def save_challenge(self, button_save_selector: str) -> None:
+    def save_challenge(
+        self,
+        button_save_selector: str,
+        input_selector: str
+    ) -> None:
+
         '''
         Clica no botão de salvar, caso ele esteja visível.
 
@@ -115,10 +134,67 @@ class TestExceptionChallenge(BasePage):
             logger.info('6º - Salvando alterações feitas')
 
             button_save = self.page.locator(button_save_selector)
+            input_field = self.page.locator(input_selector)
 
-            if button_save.is_visible():
-                button_save.click()
+            value = input_field.input_value()
+
+            if not value.strip():
+                raise RuntimeError(
+                    'Campo de entrada vazio. Não é possível salvar.'
+                )
+
+            if not button_save.is_visible():
+                raise RuntimeError(
+                    'Botão Save não está visível.'
+                )
+
+            button_save.click()
+
             logger.info('Sucesso ao salvar página, aguardar validação')
 
         except Exception as e:
             logger.error(f'Erro ao tentar salvar, conferir validação: {e}')
+
+        
+    def state_exception_challenge(
+        self,
+        input_selector_initial: str,
+        button_edit_selector: str,
+        button_save_selector: str
+    ) -> None:
+
+        '''
+        Novo desafio - Vamos tratar a primeira linha de input da página
+
+        A linha é bloqueada, até que a opção de Edit seja habilitada
+        '''
+
+        logger.info('INICIANDO NOVO DESAFIO DENTRO DA MESMA PÁGINA')
+
+        input_initial = self.page.locator(input_selector_initial)
+        button_edit_inicial = self.page.locator(button_edit_selector)
+        button_save_initial = self.page.locator(button_save_selector)
+
+        try:
+            self.page.reload()
+
+            if not input_initial.is_visible():
+                logger.warning('Compo input não está visível')
+                return
+            
+            if not input_initial.is_editable():
+                logger.info('Campo input não editável. Clicando em editar')
+                button_edit_inicial.click()
+
+            input_initial.clear()
+
+            if input_initial.input_value() != '':
+                logger.info('O campo não foi limpo. Salvamento cancelado.')
+                return
+            
+            logger.info('Campo limpo com sucesso. Salvando alterações.')
+            button_save_initial.click()
+                
+
+        except Exception as e:
+            logger.error(f'Error: {e}')

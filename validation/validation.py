@@ -8,54 +8,79 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationFinal(BasePage):
-    '''
+    """
     Responsável por realizar a validação final da automação.
 
     Verifica se o elemento esperado está visível na página após a
-    execução das etapas anteriores, indicando que a operação foi
-    concluída com sucesso.
-    '''
+    execução das etapas anteriores e valida se o texto exibido
+    corresponde ao texto esperado.
+    """
 
-    def __init__(self, page: Page, selector_validation: str):
-        '''
+    def __init__(
+        self,
+        page: Page,
+        selector_validation: str,
+    ):
+        """
         Inicializa a classe de validação final.
 
         Args:
-            page (Page): Instância da página do Playwright.
-            selector_validation (str): Seletor do elemento utilizado
-                para validar a conclusão da automação.
-        '''
+            page: Instância da página do Playwright.
+            selector_validation: Seletor do elemento utilizado para
+                validar a conclusão da automação.
+        """
         super().__init__(page)
+
         self.selector_validation = selector_validation
 
+    def validation_final(self, expected_text: str) -> bool:
+        """
+        Valida a visibilidade e o conteúdo do elemento de confirmação.
 
-    def validation_final(self) -> bool:
-        '''
-        Verifica se o elemento de validação está visível na página.
+        O método localiza o elemento informado pelo seletor, verifica
+        se ele está visível e compara o texto exibido na página com
+        o texto esperado informado durante a chamada do método.
 
-        O método localiza o elemento informado pelo seletor e valida sua
-        visibilidade. Caso o elemento seja encontrado, considera que a
-        automação foi concluída com sucesso.
+        Args:
+            expected_text: Texto esperado no elemento de validação.
 
         Returns:
-            bool:
-                True se o elemento de validação estiver visível.
-                False caso o elemento não seja encontrado ou ocorra
-                algum erro durante a validação.
-        '''
+            True se o elemento estiver visível e o texto corresponder
+            ao valor esperado. Retorna False caso o elemento não seja
+            encontrado, o texto seja diferente ou ocorra algum erro.
+        """
 
         try:
-            logger.info('7º - Validação final')
+            logger.info('Validação final')
 
-            locator = self.page.locator(self.selector_validation)
+            locator = self.page.locator(
+                self.selector_validation
+            )
 
             if not locator.is_visible():
-                logger.warning('Elemento de validação não encontrado')
+                logger.warning(
+                    'Elemento de validação não encontrado'
+                )
                 return False
 
-            logger.info('Sua informação foi salva e validada')
+            html_text = locator.inner_text()
+
+            if html_text != expected_text:
+                logger.warning(
+                    'Não foi possível validar o salvamento. '
+                    f'Texto esperado: "{expected_text}" | '
+                    f'Texto encontrado: "{html_text}"'
+                )
+                return False
+
+            logger.info(
+                'Informação salva e validada com sucesso'
+            )
             return True
 
-        except Exception as e:
-            logger.error(f'Erro, informação validadora não localizada {e}')
+        except Exception as error:
+            logger.error(
+                'Erro ao localizar ou validar a informação: '
+                f'{error}'
+            )
             return False

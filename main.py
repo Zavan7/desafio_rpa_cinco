@@ -28,11 +28,13 @@ BUTTON_ADD_SELECTOR  = '#add_btn'
 INPUTO_SELECTOR_ADD  = '#row2 .input-field'
 BUTTON_SAVE_SELECTOR = '#row2 #save_btn'
 TAG_SAVED_LOCATOR = '#confirmation'
+VALIDATION_SAVED_TEXT_C_ONE = 'Row 2 was saved'
 
 # Seletores do segundo desafio
 INPUT_SELECTOR_INITIAL  = '#row1 > input'
 BUTTON_SELECT_INITIAL = '#edit_btn'
 BUTTON_SAVED_SELECTOR_INITIAL = '#save_btn'
+VALIDATION_SAVED_TEXT_C_TWO = 'Row 1 was saved'
 
 
 # TEXTo utilizado para preencher a navegação
@@ -104,11 +106,14 @@ def main() -> None:
                 INPUTO_SELECTOR_ADD
             )
 
-            sleep(2)
 
             # Etapa 7 - Valida se a operação foi concluída com sucesso
-            validacao = ValidationFinal(page, TAG_SAVED_LOCATOR)
-            validacao.validation_final()
+            validacao = ValidationFinal(
+                page,
+                TAG_SAVED_LOCATOR                
+            )
+            
+            validacao.validation_final(VALIDATION_SAVED_TEXT_C_ONE)
 
             # Etapa 8 - Editar primeira linha e salvar em branco
             test_challenge.state_exception_challenge(
@@ -116,8 +121,9 @@ def main() -> None:
                 BUTTON_SELECT_INITIAL,
                 BUTTON_SAVED_SELECTOR_INITIAL
             )
+            
+            validacao.validation_final(VALIDATION_SAVED_TEXT_C_TWO)
 
-            sleep(10)
 
             # Encerra a sessão do navegador
             browser.close()

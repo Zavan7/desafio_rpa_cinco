@@ -164,9 +164,30 @@ class TestExceptionChallenge(BasePage):
     ) -> None:
 
         '''
-        Novo desafio - Vamos tratar a primeira linha de input da página
+        Executa o desafio de tratamento do estado de um campo desabilitado.
 
-        A linha é bloqueada, até que a opção de Edit seja habilitada
+            Recarrega a página, verifica se o campo de entrada está visível
+            e valida se ele está disponível para edição. Caso o campo esteja
+            desabilitado, aciona o botão de edição para habilitá-lo.
+
+            Após habilitar o campo, remove o conteúdo existente, valida se o
+            valor foi limpo corretamente e salva as alterações.
+
+            Args:
+                input_selector_initial: Seletor utilizado para localizar o
+                campo de entrada inicial.
+                button_edit_selector: Seletor utilizado para localizar o botão
+                    responsável por habilitar a edição do campo.
+                button_save_selector: Seletor utilizado para localizar o botão
+                    responsável por salvar as alterações.
+
+            Returns:
+                None: O método não retorna valores. A execução é registrada
+                por meio dos logs da aplicação.
+
+            Raises:
+                Exception: Registra nos logs qualquer erro ocorrido durante
+                    a execução do desafio.
         '''
 
         logger.info('INICIANDO NOVO DESAFIO DENTRO DA MESMA PÁGINA')
